@@ -7,7 +7,7 @@ A Python program that reads vowel sounds from a text and assigns them musical pi
 - Rather than adding rests between lines or stanzas, I've added them where I felt caesurae in reading the text on my own, usually near the blank space, such as in the third line of the penultimate stanza.
 
 # Future Improvements
-- Incorporate consonants and vowels not captured in Miller's chart 
+- Incorporate vowel formants not captured in Miller's chart 
 - Incorporate rhythm based on stressed and unstressed syllabels
 - Automate rests
 - Automate creation of lilypond file
