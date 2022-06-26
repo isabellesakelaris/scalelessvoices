@@ -17,6 +17,8 @@ no = "OW" #no
 gloom = "UW" #gloom
 pull = "AH" #pull
 text = str(poem_texts[0])
+text = text.replace('            ', ' \nr2\n')
+text = text.replace('    ', ' \nr4\n')
 lines = text.split("\n")
 word_list = text.split()
 stresses = []
@@ -26,6 +28,10 @@ for word in word_list:
     stresses.append(stresses_list)
     phones_list = pronouncing.phones_for_word(word)
     phones.append(phones_list)
+    if word == "r2":
+        phones.append(["r2"])
+    if word == "r4":
+        phones.append(["r4"])
 
 final_phones = []
 for phone in phones:
@@ -40,7 +46,7 @@ for stress in stresses:
         stress_final.append(stress[0])
     else: 
         stress_final.append(stress)
-    notes = []
+notes = []
 equiv_phones = []
 for phone in final_phones:
     if bee in phone:
@@ -59,30 +65,40 @@ for phone in final_phones:
         notes.append("ais")
         equiv_phones.append(phone)
     if father in phone:
-        notes.append("a")
+        notes.append("des")
         equiv_phones.append(phone)
     if law in phone:
-        notes.append("fis")
+        notes.append("ges")
         equiv_phones.append(phone)
     if no in phone: 
-        notes.append("ais,")
+        notes.append("ais")
         equiv_phones.append(phone)
     if pull in phone: 
-        notes.append("cis,")
+        notes.append("cis")
         equiv_phones.append(phone)
     if gloom in phone:
-        notes.append("g,")
+        notes.append("g")
         equiv_phones.append(phone)
+    if "r2" in phone:
+        notes.append("r")
+        equiv_phones.append("2")
+    if "r4" in phone:
+        notes.append("r")
+        equiv_phones.append("4")
     
 durations = []
-for note in notes:
-    if "repeat" in note:
-        duration = "8"
-        durations.append(duration)
+for equiv in equiv_phones:
+    if "2" in equiv:
+        durations.append("2")
     else:
-        duration = "4"
-        durations.append(duration)
+        durations.append("4")
+    
 
 zipped = zip(notes, durations)
+lilypond_file = open("automated_"+poem_titles[0]+".ly", 'w+')
+header = '\\version "2.22.2" \n{\n\\relative\n\\time 2/4\n\\clef "treble"\n'
+lilypond_file.write(header)
 for the_zip in zipped:
-    print(the_zip)
+    lilypond_file.write(the_zip[0] + the_zip[1] + '\n')
+lilypond_file.write("}")
+lilypond_file.close()
